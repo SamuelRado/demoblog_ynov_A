@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+{# nous héritons du template base.html.twig #}
+
+{# lorsque l'on hérite d'un template, nous devons écrire le code de la page dans des blocks twig #}
+
+{# le contenu d'un block dans la page écrase le contenu de ce block dans la base #}
+
+{% block title %}
+Accueil
+{% endblock %}
+
+{% block body %}
+	<p>Test de la page d'accueil</p>
+
+	<h1>{{ title }}</h1>
+
+	{% if age >= 18 %}
+		<p>Tu es majeur</p>
+	{% else %}
+		<p>Tu es mineur</p>
+	{% endif %}
+
+</p>
+{% endblock %}
+
+{# title et age sont définies dans la méthode home() du fichier BlogController.php #}

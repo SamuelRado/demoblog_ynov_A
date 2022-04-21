@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BlogController!
+{% endblock %}
+
+{% block body %}
+
+	{{ form_start(formRecherche) }}
+
+		{{ form_widget(formRecherche.recherche, {
+			'attr': {
+				'placeholder': "Rechercher un article"
+			}
+		}) }}
+
+		<button type="submit" class="btn btn-primary mt-2">Rechercher</button>
+
+	{{ form_end(formRecherche) }}
+
+	<section class="row articles">
+		{% for article in articles %}
+			{# article : variable de réception => réceptionne un article par tour de boucle
+			            articles : tableau qui contient tous les articles
+			         #}
+			<article class="col-md-4 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1">
+				<h2>{{ article.title }}</h2>
+				{# syntaxe twig : on accède à la propriété title via getTitle() automatiquement #}
+				<div class="metadata">Ecrit le
+					{{ article.createdAt | date("d/m/Y à H:i:s") }}
+					dans la catégorie {{ article.category.title }}</div>
+					{# depuis mon objet article, j'accède à la propriété category #}
+					{# category est un objet de classe Category, je veux afficher sa propriété title #}
+
+				{# createdAt est un objet DateTime. Nous utilisons le filtre date() pour formater cet objet en une chaine de caractères affichable #}
+				<div class="content">
+					<img src="{{ asset('images/articles/' ~ article.image) }}" alt="" class="img-fluid">
+					<hr>
+					{{ article.content|slice(0, 30)|raw }}...
+					<br>
+					{# le filtre raw permet d'interpréter les balises html #}
+					{# le filtre slice permet de découper un morceau d'une chaine de caractères #}
+
+					<a href="{{ path('blog_show', {'id': article.id}) }}" class="btn btn-primary">Lire la suite</a>
+					{# path() est une fonction twig qui permet de générer un lien en fonction d'une route #}
+				{# le premier argument est le nom de la route (name=xxx) #}
+					{# le deuxieme arg est le/les paramètre(s) de la route  #}
+				</div>
+			</article>
+		{% endfor %}
+	</section>
+
+{% endblock %}
