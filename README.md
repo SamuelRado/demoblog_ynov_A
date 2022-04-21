@@ -2,7 +2,7 @@
 
 Pour lancer le projet, dans un terminal, placez-vous dans votre dossier et tapez
 
-composer instal
+composer install
 
 pour installer les dépendances.
 
