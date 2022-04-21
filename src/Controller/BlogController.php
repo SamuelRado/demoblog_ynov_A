@@ -7,6 +7,7 @@ use App\Entity\Contact;
 use App\Form\ArticleType;
 use App\Form\ContactType;
 use App\Form\RechercheType;
+use App\Notification\ContactNotification;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -115,7 +116,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/contact", name="blog_contact")
      */
-    public function contact(Request $request, EntityManagerInterface $manager)
+    public function contact(Request $request, EntityManagerInterface $manager, ContactNotification $cn)
     {
         $contact = new Contact;
         $form = $this->createForm(ContactType::class, $contact);
@@ -125,6 +126,11 @@ class BlogController extends AbstractController
         {
             $manager->persist($contact);
             $manager->flush();
+            $cn->notify($contact);
+            $this->addFlash('success', 'Votre message a bien été envoyé !');
+            // addflash() permet de créer des messages de notifications
+            // elle prend en param le type du msg et le contenu du msg
+            return $this->redirectToRoute('blog_contact');  // permet de recharger la page et vider les champs du form
         }
 
         return $this->render("blog/contact.html.twig", [

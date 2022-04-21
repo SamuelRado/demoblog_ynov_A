@@ -2,19 +2,23 @@
 
 {% block body %}
 
-{{ form_start(formContact) }}
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success text-center">{{ message }}</div>
+	{% endfor %}
 
-{{ form_row(formContact.firstname, {
+	{{ form_start(formContact) }}
+
+	{{ form_row(formContact.firstname, {
     label: "Prénom"
 }) }}
-{{ form_row(formContact.lastname, {
+	{{ form_row(formContact.lastname, {
     label: "Nom"
 }) }}
-{{ form_row(formContact.email) }}
-{{ form_row(formContact.message) }}
+	{{ form_row(formContact.email) }}
+	{{ form_row(formContact.message) }}
 
-<button type="submit" class="btn btn-primary">Envoyer</button>
+	<button type="submit" class="btn btn-primary">Envoyer</button>
 
-{{ form_end(formContact) }}
+	{{ form_end(formContact) }}
 
 {% endblock %}

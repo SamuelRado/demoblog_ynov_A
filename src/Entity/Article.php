@@ -195,4 +195,10 @@ class Article
 
         return $this;
     }
+
+    public function __toString()
+    {
+        // __toString() est une méthode magique qui permet de renvoyer une valeur lorsqu'on essaye d'afficher un objet
+        return $this->title;
+    }
 }
